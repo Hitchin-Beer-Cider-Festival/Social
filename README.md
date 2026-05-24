@@ -70,6 +70,8 @@ To add a new image:
 
 Publer fetches at CSV import time, so the file must be on `main` and publicly accessible before the CSV is uploaded.
 
+For the CSV column schema and import workflow, see Publer's guide: [Ultimate CSV Bulk Scheduler for Social Media](https://publer.com/blog/ultimate-csv-bulk-scheduler-social-media/).
+
 ## Updating the skill
 
 1. Edit `plugins/hbcf-social-media/skills/hbcf-social-media/SKILL.md`
