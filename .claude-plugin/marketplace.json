@@ -1,0 +1,19 @@
+{
+  "name": "hbcf-social",
+  "owner": {
+    "name": "Lekman Consulting Ltd"
+  },
+  "metadata": {
+    "description": "Social media skills and assets for the Hitchin Beer & Cider Festival",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "hbcf-social-media",
+      "source": "./plugins/hbcf-social-media",
+      "description": "Draft Facebook and Instagram posts and Publer CSV bulk uploads for the Hitchin Beer & Cider Festival in the established festival voice.",
+      "version": "1.0.0",
+      "category": "marketing"
+    }
+  ]
+}
