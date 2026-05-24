@@ -394,20 +394,44 @@ Reference: https://publer.com/help/en/article/how-to-schedule-in-bulk-using-a-cs
 
 ### CSV columns
 
-| Column | Required | Notes |
-|---|---|---|
-| Date | No | `YYYY/MM/DD HH:MM` (24-hour). Leave blank to schedule manually after upload. |
-| Text | Yes | The post caption. Newlines preserved when field is quoted. |
-| Link | No | External URL. Usually blank since links live in the caption text. |
-| Media URL(s) | No | Publicly accessible image or video URL. Comma-separated for multiple. Use the GitHub raw URL pattern documented below. |
-| Title | No | For stories and reels only. |
-| Label(s) | No | For categorisation. Use `sponsor-thanks-fb`, `sponsor-thanks-ig`, `countdown-fb`, `countdown-ig`, `beer-promo`, etc. to filter post-upload. |
-| Alt text(s) | No | Image alt text for accessibility. Separate multiples with `||`. |
+Publer's template has 12 columns. Keep all 12 in every CSV, even when most are blank; the column structure is part of the import contract. Reference: https://publer.com/blog/ultimate-csv-bulk-scheduler-social-media/
 
-### Important rules
+| # | Column | HBCF use | Notes |
+|---|---|---|---|
+| 1 | Date | Yes | `YYYY/MM/DD HH:MM` (24-hour). Leave blank to auto-schedule via labels. |
+| 2 | Text | Yes | The post caption. Newlines preserved when field is quoted. |
+| 3 | Link(s) | **No** | Leave blank for countdown and sponsor posts. If populated on Facebook, the post converts to a link-preview share and the image loses prominence. Tickets URL stays inside the Text field. |
+| 4 | Media URL(s) | Yes | Publicly accessible image URL. Use the GitHub raw URL pattern below. |
+| 5 | Title | No | For videos, LinkedIn PDFs, Pinterest pins only. |
+| 6 | Label(s) | Yes | `countdown-fb`, `countdown-ig`, `sponsor-thanks-fb`, `sponsor-thanks-ig`, etc. Used for grouping and auto-schedule. |
+| 7 | Alt text(s) | Yes | Accessibility text describing the image. Separate multiples with `\|\|`. |
+| 8 | Comment(s) | Optional | First comment text. Could host @-mentions to keep caption cleaner, but conversion is still required in Publer. Not worth fragmenting for HBCF's slim mention block. Multiples separated with `\|\|`. |
+| 9 | Board, Album, or Category | No | Pinterest boards, Facebook albums, Google categories. Not used. |
+| 10 | Post Subtype | No | `short`, `reel`, `story`, `pdf`, etc. Use when scheduling Instagram Stories or Reels in future; not for countdown feed posts. |
+| 11 | CTA | Conditional | Facebook and Google only. **Requires the Link(s) column to be populated**, which conflicts with native image posts. Do not use on countdown or sponsor posts. Useful for dedicated text-led "buy tickets" or "tickets running low" Facebook reminders, where `BUY_TICKETS` is the relevant value. Available CTAs include `BUY_TICKETS`, `LEARN_MORE`, `SIGN_UP`, `DONATE_NOW`, `CONTACT_US`. |
+| 12 | Reminder | No | For push-notification reminders. We auto-publish. |
 
-- **Two rows per post** when content differs between Facebook and Instagram. The Instagram row needs the `or visit the link in our bio.` line and the hashtags-only tag approach (no `@` mentions).
-- **Use Google Sheets, not Excel,** when working with the CSV. Publer's documentation is explicit that special characters and styled text only round-trip correctly via Sheets.
+### Critical rule: one CSV per platform
+
+Split posts into two separate CSVs, one for Facebook and one for Instagram. Do not mix platforms in a single CSV.
+
+**Why:**
+- Cleaner account assignment in Publer (whole CSV maps to one account)
+- Per-platform scheduling can be applied to all rows at once via Publer's "apply to all" UI
+- Per-platform differences (link-in-bio line, tag block, future CTA usage) stay encapsulated
+- Easier to troubleshoot and edit
+- Aligned with Publer's own recommendation when platform-specific columns differ
+
+**Naming convention:**
+- `hbcf-<series>-<batch>-facebook.csv` for the Facebook CSV
+- `hbcf-<series>-<batch>-instagram.csv` for the Instagram CSV
+
+For example: `hbcf-countdown-day-9-to-launch-facebook.csv` and the matching `-instagram.csv`.
+
+### Other rules
+
+- **Use Google Sheets, not Excel,** when editing CSVs by hand. Publer's documentation is explicit that special characters and styled text only round-trip correctly via Sheets.
+- **Keep all 12 columns in the CSV header,** even when most are blank. The structure is part of the contract.
 
 ### Image hosting via GitHub
 
@@ -432,20 +456,23 @@ Publer fetches the image at CSV import time, so the file must be on `main` and p
 
 ### Upload workflow
 
-1. **Prepare the CSV** with assembled captions, hashtags, partnership line, and (for FB only) the slim `@` mention block
+Repeat this sequence twice: once for the Facebook CSV, once for the Instagram CSV.
+
+1. **Prepare both CSVs** (Facebook and Instagram) with assembled captions, hashtags, partnership line, and (for FB only) the slim `@` mention block
 2. **Confirm images are pushed to GitHub** and the raw URLs resolve in a browser
-3. In Publer: **Create → Bulk Options → Import CSV**
+3. In Publer: **Create → Bulk Options → Import CSV** and select one CSV
 4. Click the upload notification to **load the draft posts**
 5. **Verify images attached** automatically from the URLs. If any post shows missing media, wait a minute for GitHub raw to propagate, then retry, or attach manually
-6. **Filter by Label(s):** select `countdown-fb` (or equivalent) rows, assign to Facebook account; repeat for `countdown-ig` and Instagram
-7. **For Facebook rows only:** open each draft and convert the `@` mention block to real mentions using Publer's `@` autocomplete (see Account tag library). Three to four conversions per post.
-8. **For Instagram rows:** no `@` conversion needed (hashtags only, no `@` block in the canonical IG tag approach)
+6. **Select the social account** for this CSV (Facebook page for the FB CSV, Instagram account for the IG CSV). With one CSV per platform, you can select-all rather than filtering by label
+7. **For the Facebook CSV only:** open each draft and convert the `@` mention block to real mentions using Publer's `@` autocomplete (see Account tag library). Three to four conversions per post.
+8. **For the Instagram CSV:** no `@` conversion needed (hashtags only, no `@` block in the canonical IG tag approach)
 9. Review every post individually
 10. Set scheduling and submit
+11. Repeat steps 3 to 10 for the other CSV
 
 ### Account assignment
 
-Publer does NOT assign posts to accounts automatically from the CSV. Each row becomes a draft that must be assigned to one or more social accounts in the Publer UI. The `Label(s)` column is the fastest way to bulk-select rows for the right account.
+Publer does NOT assign posts to accounts automatically from the CSV. With the two-CSV split, each CSV represents one platform, and you can apply the account to all rows at once. The `Label(s)` column is still useful for organisation and any future auto-schedule rules.
 
 ---
 
@@ -475,8 +502,11 @@ Run both checklists before scheduling a batch.
 - [ ] In-image account tags planned for Instagram (separate from caption)
 
 ### CSV checks (if bulk uploading)
-- [ ] Two rows per post (one FB, one IG) with the correct label
-- [ ] Labels set to `countdown-fb`/`countdown-ig` or `sponsor-thanks-fb`/`sponsor-thanks-ig`
+- [ ] Two CSVs produced, one for Facebook and one for Instagram (not mixed)
+- [ ] All 12 Publer columns present in each CSV header, blanks where not used
+- [ ] Labels set to `countdown-fb`/`countdown-ig` or `sponsor-thanks-fb`/`sponsor-thanks-ig` matching the CSV's platform
+- [ ] Link(s) column blank for image-led posts (otherwise FB converts to link-share format)
+- [ ] CTA column blank for image-led posts (requires Link, conflicts with native image)
 - [ ] Media URL(s) populated with the GitHub raw URL pointing at the correct folder and filename
 - [ ] Image files actually pushed to `main` of `lekman/hbcf-social` before CSV upload
 - [ ] Raw image URL verified by opening it in a browser
@@ -519,8 +549,8 @@ When `TBC`, use plain text in the tag block until verified. Verify by checking t
 7. **Run both quality checklists.**
 8. **Output:**
    - For a single post: present as two text blocks (FB and IG) for the user to copy into Publer
-   - For a batch: produce a CSV file with the columns documented above
-   - For a countdown series: produce both the CSV and the PNG graphics (using the countdown graphic specification)
+   - For a batch: produce **two CSV files, one per platform**, named `hbcf-<series>-<batch>-facebook.csv` and `hbcf-<series>-<batch>-instagram.csv`, each containing all 12 Publer columns
+   - For a countdown series: produce both CSVs and the PNG graphics (using the countdown graphic specification)
 9. **Note any TBC handles or facts** the user needs to verify before scheduling.
 
 ---

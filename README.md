@@ -25,7 +25,8 @@ hbcf-social/
 ├── countdown/                        # Daily countdown PNGs
 ├── sponsors/                         # Sponsor thank-you PNGs (planned)
 ├── build-up/                         # Setup-week photos (planned)
-└── on-site/                          # Live festival photos (planned)
+├── on-site/                          # Live festival photos (planned)
+└── csv/                              # Publer bulk-import CSVs (one per platform per batch)
 ```
 
 ## Installing the skill
