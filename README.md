@@ -9,7 +9,7 @@ This repository serves two functions:
 
 ## Repository structure
 
-```
+```ini
 hbcf-social/
 ├── .claude-plugin/
 │   └── marketplace.json              # Marketplace catalog
@@ -49,7 +49,7 @@ Download `dist/hbcf-social-media.skill` from this repository, then upload it via
 
 Images referenced from Publer CSVs use the GitHub raw URL pattern:
 
-```
+```text
 https://raw.githubusercontent.com/lekman/hbcf-social/main/<folder>/<filename>
 ```
 
