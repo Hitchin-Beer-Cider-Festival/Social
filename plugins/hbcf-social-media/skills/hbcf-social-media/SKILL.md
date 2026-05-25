@@ -74,17 +74,17 @@ These are the exact rules configured in Publer's brand voice. Use them whenever 
 4. Dates and venue block
 5. Tickets line and URL
 6. Hashtag block
-7. Account tag block
+7. Partnership line
 ```
 
-Always close with the canonical hashtag and tag blocks defined below.
+Caption ends at the partnership line. Facebook `@` mentions are added in the Publer composer after CSV import, not in the caption text (see Account tag library).
 
 ### Instagram differences
 
 Use the same body as Facebook, with these adjustments:
 - Add `or visit the link in our bio.` immediately after the tickets URL
-- Drop the `@` mention block entirely; use hashtags and the plain-text partnership line only
-- For sponsor posts, mention the sponsor by name in the body copy rather than tagging the caption (unless the sponsor has an active IG worth the manual conversion step; see Account tag library)
+- No `@` mentions in the caption (Instagram discovery runs on hashtags)
+- For sponsor posts, mention the sponsor by name in the body copy. In-image account tags can be set in Publer's per-post UI if the sponsor has an active IG.
 
 ---
 
@@ -108,7 +108,7 @@ this year. [TIER PAYOFF LINE: where attendees will see the sponsor at
 the festival.]
 
 4th to 6th June 2026
-Hitchin Rugby Club
+King George V Playing Fields, Old Hale Way, Hitchin, SG5 1XL
 
 Advance tickets are on sale now:
 https://hitchinbeerciderfestival.org.uk/
@@ -116,8 +116,10 @@ https://hitchinbeerciderfestival.org.uk/
 
 [HASHTAG BLOCK]
 
-[TAG BLOCK]
+In partnership with CAMRA North Hertfordshire and Hitchin Rugby Club.
 ```
+
+For Facebook, `@` mention the sponsor's Page in the composer after CSV import. Use the sponsor's actual Facebook Page name (not their handle from another platform).
 
 ### Tier phrases and payoff lines
 
@@ -189,8 +191,10 @@ King George V Playing Fields, Old Hale Way, Hitchin, SG5 1XL
 
 [HASHTAG BLOCK]
 
-[TAG BLOCK]
+In partnership with CAMRA North Hertfordshire and Hitchin Rugby Club.
 ```
+
+For Facebook, `@` mention CAMRA North Hertfordshire and Hitchin Rugby Club (always), plus CAMRA national and Hitchin Nub News when relevant, in the Publer composer after CSV import.
 
 ### Joiner variation rule
 
@@ -248,39 +252,48 @@ Add `#VolunteerLed` and `#CAMRAVolunteers`.
 
 ## Account tag library
 
-### Key constraint: Publer CSV imports do not resolve @ mentions
+### Confirmed: Publer CSV imports do not resolve Facebook mentions in any syntax
 
-When a CSV is imported into Publer, any `@handle` in the post text arrives as plain text. To become a real, clickable mention, each `@handle` must be re-typed using Publer's composer autocomplete, which queries the social platform's API for the account ID. This is by Publer's design (anti-abuse).
+Confirmed by Publer support on 2026-05-24. Every attempted CSV-side syntax fails to produce a real Facebook mention:
 
-Platform-specific behaviour:
+| Attempted CSV syntax | Behaviour at publish |
+|---|---|
+| `@camranorthherts` (plain handle) | Publishes as literal text |
+| `[Name](https://facebook.com/handle)` (markdown link) | Publishes as literal text |
+| Page URL on its own | Publishes as literal text or a link preview |
+| Page ID inserted in the caption | Publishes as literal text |
 
-| Platform | Plain `@handle` text in CSV | Manual conversion needed? |
-|---|---|---|
-| Facebook | Will NOT resolve at publish; remains plain text | Yes, every time |
-| Instagram | Per Publer docs, resolves at publish if spelled correctly | Optional; Publer preview shows as plain text until converted |
-| LinkedIn | Will NOT resolve at publish | Yes, every time |
+The Facebook API requires the mention to be resolved by selecting a suggestion returned by Publer's composer autocomplete. This is enforced by Facebook (not chosen by Publer), and Publer has stated there are no plans to change CSV import to do this server-side. Reference: https://publer.com/help/en/article/how-to-tagmention-people-or-social-accounts-12vywhs/
 
-The skill's tag strategy is designed to minimise this manual conversion cost.
+**The practical consequence:** Facebook post mentions must be added in the Publer composer after CSV import, every time. Plan for this in the workflow rather than fighting it.
 
 ### Facebook tag block (canonical)
 
 ```
-@camranorthherts @campaignforrealale @hitchinnubnews
-
 In partnership with CAMRA North Hertfordshire and Hitchin Rugby Club.
 ```
 
-Three @ mentions only. All three need manual conversion in Publer's composer after CSV import. Plain text page acknowledgements (CAMRA North Hertfordshire, Hitchin Rugby Club) sit in the partnership line and do not require conversion.
+No `@` mentions in the CSV caption. The partnership line names the two core partner accounts (CAMRA North Hertfordshire and Hitchin Rugby Club) as plain text. During the post-import review step, the reviewer converts those names to real `@` tags using composer autocomplete, and adds any further tags (sponsor handle, Campaign for Real Ale, Hitchin Nub News) at their discretion.
 
-For sponsor posts, prepend the sponsor's FB handle:
+### Mentions to add in the composer (FB)
 
-```
-@sponsorhandle @camranorthherts @campaignforrealale @hitchinnubnews
+For every Facebook post during review, type `@` and select from the autocomplete dropdown:
 
-In partnership with CAMRA North Hertfordshire and Hitchin Rugby Club.
-```
+| Always | Type | Then select |
+|---|---|---|
+| CAMRA North Hertfordshire | `@CAMRA North` | "CAMRA North Hertfordshire" |
+| Hitchin Rugby Club | `@Hitchin Rugby` | "Hitchin Rugby Club" |
 
-Four conversions instead of three.
+| When relevant | Type | Then select |
+|---|---|---|
+| The Campaign for Real Ale (the national body) | `@CAMRA` or `@Campaign` | "CAMRA" or "Campaign for Real Ale" |
+| Hitchin Nub News | `@Hitchin Nub` | "Hitchin Nub News" |
+| Sponsor (sponsor posts only) | `@<sponsor name>` | The verified Facebook Page |
+
+Important Facebook tagging rules (per Publer docs):
+- Search by **Page name**, not handle or username. Facebook's autocomplete matches the page's display name.
+- The result must be selected from the autocomplete dropdown for the mention to register.
+- Only Facebook **Pages** can be tagged, not personal profiles.
 
 ### Instagram tag block (canonical)
 
@@ -288,31 +301,28 @@ Four conversions instead of three.
 In partnership with CAMRA North Hertfordshire and Hitchin Rugby Club.
 ```
 
-No `@` mentions at all. Discovery on Instagram runs on hashtags; the @ tags add notification value but at the cost of cluttered captions and the manual conversion step. The slim approach trades a small amount of cross-promotion lift for a much cleaner post and zero manual conversion.
+No `@` mentions at all. Discovery on Instagram runs on hashtags; the marginal cross-promotion value of `@` tags does not justify the additional manual step. If a specific sponsor post warrants tagging the sponsor's IG, add it in the composer at review time.
 
-For sponsor posts on Instagram, mention the sponsor by name in the body copy rather than tagging:
+### Verified handles (reference only)
 
-> "Modern Networks is a Hitchin-based IT managed services provider…"
+These are the actual platform handles for the orgs we deal with. They are NOT used in CSV captions; they are stored here so the team knows what to search for in composer autocomplete.
 
-If the sponsor has a verified Instagram and the team specifically wants the cross-promotion, add `@sponsorhandle` as one final line below the partnership line. Acknowledge it requires the manual conversion step in Publer.
-
-### Verified handles
-
-| Account | Facebook | Instagram |
+| Account | Facebook Page name | Instagram handle |
 |---|---|---|
-| HBCF (self) | @HitchinBeerCiderFestival | @hitchinbeerciderfestival |
-| CAMRA North Herts | @camranorthherts | @camranorthherts |
-| Campaign for Real Ale | @campaignforrealale | @campaignforrealale |
-| Hitchin Nub News | @hitchinnubnews | @hitchinnubnews |
-| CAMRA North Hertfordshire (page) | plain text | (no @ on IG by policy) |
-| Hitchin Rugby Club | plain text | (no @ on IG by policy) |
+| HBCF (self) | Hitchin Beer Cider Festival | @hitchinbeerciderfestival |
+| CAMRA North Herts | CAMRA North Hertfordshire | @camranorthherts |
+| Campaign for Real Ale | CAMRA (or Campaign for Real Ale) | @campaignforrealale |
+| Hitchin Nub News | Hitchin Nub News | @hitchinnubnews |
+| Hitchin Rugby Club | Hitchin Rugby Club | (no active IG, verify before tagging) |
 
 ### In-image account tags (Instagram only)
 
-Instagram allows tagging accounts on the image itself, separate from the caption. This is a different mechanism, set up in Publer's UI per post. For sponsor posts:
+Instagram allows tagging accounts on the image itself, separate from the caption. This is a different mechanism, set up in Publer's UI per post. For sponsor posts, add:
 - The sponsor's IG handle, if it exists
 - `@camranorthherts`
 - `@hitchinnubnews`
+
+These in-image tags resolve correctly even when added in Publer's UI.
 
 ---
 
@@ -405,7 +415,7 @@ Publer's template has 12 columns. Keep all 12 in every CSV, even when most are b
 | 5 | Title | No | For videos, LinkedIn PDFs, Pinterest pins only. |
 | 6 | Label(s) | Yes | `countdown-fb`, `countdown-ig`, `sponsor-thanks-fb`, `sponsor-thanks-ig`, etc. Used for grouping and auto-schedule. |
 | 7 | Alt text(s) | Yes | Accessibility text describing the image. Separate multiples with `\|\|`. |
-| 8 | Comment(s) | Optional | First comment text. Could host @-mentions to keep caption cleaner, but conversion is still required in Publer. Not worth fragmenting for HBCF's slim mention block. Multiples separated with `\|\|`. |
+| 8 | Comment(s) | Optional | First comment text. Published as a visible comment by the same account immediately after the main post. Useful for engagement questions, follow-up CTAs, or moving hashtags out of the caption. Does NOT support `@` mentions (same constraint as the main caption). Multiples separated with `\|\|`. |
 | 9 | Board, Album, or Category | No | Pinterest boards, Facebook albums, Google categories. Not used. |
 | 10 | Post Subtype | No | `short`, `reel`, `story`, `pdf`, etc. Use when scheduling Instagram Stories or Reels in future; not for countdown feed posts. |
 | 11 | CTA | Conditional | Facebook and Google only. **Requires the Link(s) column to be populated**, which conflicts with native image posts. Do not use on countdown or sponsor posts. Useful for dedicated text-led "buy tickets" or "tickets running low" Facebook reminders, where `BUY_TICKETS` is the relevant value. Available CTAs include `BUY_TICKETS`, `LEARN_MORE`, `SIGN_UP`, `DONATE_NOW`, `CONTACT_US`. |
@@ -458,14 +468,14 @@ Publer fetches the image at CSV import time, so the file must be on `main` and p
 
 Repeat this sequence twice: once for the Facebook CSV, once for the Instagram CSV.
 
-1. **Prepare both CSVs** (Facebook and Instagram) with assembled captions, hashtags, partnership line, and (for FB only) the slim `@` mention block
+1. **Prepare both CSVs** (Facebook and Instagram) with assembled captions, hashtags, and the plain-text partnership line. Do NOT include `@` mentions in the caption.
 2. **Confirm images are pushed to GitHub** and the raw URLs resolve in a browser
 3. In Publer: **Create → Bulk Options → Import CSV** and select one CSV
 4. Click the upload notification to **load the draft posts**
 5. **Verify images attached** automatically from the URLs. If any post shows missing media, wait a minute for GitHub raw to propagate, then retry, or attach manually
 6. **Select the social account** for this CSV (Facebook page for the FB CSV, Instagram account for the IG CSV). With one CSV per platform, you can select-all rather than filtering by label
-7. **For the Facebook CSV only:** open each draft and convert the `@` mention block to real mentions using Publer's `@` autocomplete (see Account tag library). Three to four conversions per post.
-8. **For the Instagram CSV:** no `@` conversion needed (hashtags only, no `@` block in the canonical IG tag approach)
+7. **For the Facebook CSV:** open each draft and add `@` mentions via composer autocomplete. Always add `@CAMRA North Hertfordshire` and `@Hitchin Rugby Club`. Add `@CAMRA` (national) and `@Hitchin Nub News` when relevant. For sponsor posts, also add the sponsor's Facebook Page. See Account tag library for the autocomplete trigger strings.
+8. **For the Instagram CSV:** no `@` mentions needed in the caption. For sponsor posts, set in-image account tags via Publer's per-post UI rather than typing in the caption.
 9. Review every post individually
 10. Set scheduling and submit
 11. Repeat steps 3 to 10 for the other CSV
@@ -496,10 +506,11 @@ Run both checklists before scheduling a batch.
 
 ### Tags and accounts
 - [ ] Hashtag block matches the canonical (or brewery / volunteer variant)
-- [ ] FB tag block uses the slim 3-mention canonical (plus sponsor handle if applicable)
-- [ ] IG tag block has no `@` mentions; partnership line only
-- [ ] No `@modernnetworks`-style assumed handles; only handles confirmed from the source's own website footer
-- [ ] In-image account tags planned for Instagram (separate from caption)
+- [ ] FB caption does NOT contain `@` mentions (those are added in composer after import)
+- [ ] IG caption does NOT contain `@` mentions
+- [ ] Partnership line present at the end of caption naming CAMRA North Hertfordshire and Hitchin Rugby Club
+- [ ] No invented handles; only Page names confirmed against the org's own website
+- [ ] In-image account tags planned for Instagram (separate from caption, set in Publer UI)
 
 ### CSV checks (if bulk uploading)
 - [ ] Two CSVs produced, one for Facebook and one for Instagram (not mixed)
@@ -516,8 +527,9 @@ Run both checklists before scheduling a batch.
 ### Publer post-import checks
 - [ ] Images attached automatically; if any are missing, wait for GitHub raw to propagate or attach manually
 - [ ] Correct account assigned per label (`-fb` to Facebook, `-ig` to Instagram)
-- [ ] Facebook rows: every `@` mention converted via composer autocomplete to a real tag (displays as the friendly page name, not `@handle`)
-- [ ] Instagram rows: caption posts without any `@` (only hashtags and partnership line)
+- [ ] **Facebook rows: `@` mentions added via composer autocomplete** (CAMRA North Hertfordshire, Hitchin Rugby Club always; CAMRA national, Hitchin Nub News, sponsor as relevant)
+- [ ] Facebook mentions display as friendly page names in cyan, not as `@handle` plain text
+- [ ] Instagram rows: in-image account tags set if applicable
 - [ ] Each post reviewed individually before scheduling
 
 ---
@@ -534,7 +546,7 @@ Update this when new sponsors are signed.
 | Buntingford Brewery | Programme | Yes (North Herts) | TBC | TBC |
 | Function Security | International Beer Bar | Yes (Hitchin) | TBC | TBC |
 
-When `TBC`, use plain text in the tag block until verified. Verify by checking the sponsor's own website footer for social links. Do not guess handles based on the company name.
+When `TBC`, the team should verify the sponsor's actual Facebook Page name and Instagram handle by checking the sponsor's own website footer for social links. Do not guess handles based on the company name. The verified Page name is used in the Publer composer `@` autocomplete during post-import review.
 
 ---
 
