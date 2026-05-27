@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        ".remember": true,
+        ".trunk": true,
+        ".vscode": true
+    }
+}
