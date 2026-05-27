@@ -23,6 +23,7 @@ hbcf-social/
 ├── dist/
 │   └── hbcf-social-media.skill       # Packaged bundle for direct download
 ├── countdown/                        # Daily countdown PNGs
+├── brewery-spotlights/               # Brewery debut and Craft Bar pick PNGs
 ├── sponsors/                         # Sponsor thank-you PNGs (planned)
 ├── build-up/                         # Setup-week photos (planned)
 ├── on-site/                          # Live festival photos (planned)
