@@ -25,6 +25,7 @@ hbcf-social/
 ├── countdown/                        # Daily countdown PNGs
 ├── brewery-spotlights/               # Brewery debut and Craft Bar pick PNGs
 ├── cider/                            # Cider Bar lineup PNGs
+├── beers/                            # Dark ales and other beer feature PNGs
 ├── sponsors/                         # Sponsor thank-you PNGs (planned)
 ├── build-up/                         # Setup-week photos (planned)
 ├── on-site/                          # Live festival photos (planned)
