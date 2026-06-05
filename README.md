@@ -27,8 +27,11 @@ hbcf-social/
 ├── cider/                            # Cider Bar lineup PNGs
 ├── beers/                            # Dark ales and other beer feature PNGs
 ├── sponsors/                         # Sponsor thank-you PNGs (planned)
+├── partners/                         # Partner feature PNGs (e.g. Feed Up Warm Up)
+├── community/                        # Community/festival update PNGs (volunteers, weather, opening)
 ├── build-up/                         # Setup-week photos (planned)
 ├── on-site/                          # Live festival photos (planned)
+├── copy/                             # Hand-written post copy (md) for video/manual posts that bypass the CSV pipeline
 └── csv/                              # Publer bulk-import CSVs (one per platform per batch)
 ```
 
