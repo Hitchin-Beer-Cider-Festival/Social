@@ -1,5 +1,5 @@
 {
   "name": "hbcf-social-media",
-  "version": "1.3.0",
-  "description": "Draft Facebook and Instagram posts, generate branded graphics, process photos, and prepare Publer CSV bulk uploads for the Hitchin Beer & Cider Festival. Covers the full visual template library, photo treatment workflow (HEIC, square crop, hedgehog watermark), parsing of teammate Word-doc drafts, and image-vs-video posting strategy. Triggers on HBCF post requests, sponsor thanks, countdown posts, photo watermarking, event-day carousels, and Publer CSV preparation."
+  "version": "1.4.0",
+  "description": "Draft Facebook and Instagram posts, generate branded graphics, process photos, and prepare Publer CSV bulk uploads for the Hitchin Beer & Cider Festival. Covers the full visual template library, photo treatment workflow (HEIC, square crop, hedgehog watermark), parsing of teammate Word-doc drafts, image-vs-video posting strategy, and the .import end-to-end command (base message plus images to branded posts, CSVs, and a push for Publer). Triggers on HBCF post requests, sponsor thanks, countdown posts, photo watermarking, event-day carousels, import, and Publer CSV preparation."
 }

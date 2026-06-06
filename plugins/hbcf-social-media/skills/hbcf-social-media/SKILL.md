@@ -1,6 +1,6 @@
 ---
 name: hbcf-social-media
-description: Draft Facebook and Instagram posts, generate branded graphics, process event photos, and prepare Publer CSV bulk uploads for the Hitchin Beer & Cider Festival in the established festival voice. Covers the full visual template library (sponsor thanks, countdown cards, big-number stats, list feature carousels, partner spotlights, launch moments, watermarked event photos), the photo treatment workflow (HEIC conversion, square cropping, hedgehog watermarking), parsing of teammate Word-doc drafts, and the image-vs-video posting strategy. Use this skill whenever asked to write posts for HBCF, thank a sponsor, announce a beer or session, post festival updates, draft countdown posts, prepare event-day carousels, watermark or crop a photo for the festival, parse a draft from Rachel or another teammate, or prepare bulk schedules in Publer. Triggers include "HBCF post", "Hitchin Beer Festival social", "thank [sponsor] for the festival", "countdown post", "Publer CSV", "festival Instagram", "festival photo", "watermark this", "festival video", "festival carousel", "Rachel's draft", or any social media work for the Hitchin Beer & Cider Festival 2026. Use this even if the user just mentions a sponsor name in the context of the festival.
+description: Draft Facebook and Instagram posts, generate branded graphics, process event photos, and prepare Publer CSV bulk uploads for the Hitchin Beer & Cider Festival in the established festival voice. Covers the full visual template library (sponsor thanks, countdown cards, big-number stats, list feature carousels, partner spotlights, launch moments, watermarked event photos), the photo treatment workflow (HEIC conversion, square cropping, hedgehog watermarking), parsing of teammate Word-doc drafts, and the image-vs-video posting strategy. Use this skill whenever asked to write posts for HBCF, thank a sponsor, announce a beer or session, post festival updates, draft countdown posts, prepare event-day carousels, watermark or crop a photo for the festival, parse a draft from Rachel or another teammate, or prepare bulk schedules in Publer. Triggers include "HBCF post", "Hitchin Beer Festival social", "thank [sponsor] for the festival", "countdown post", "Publer CSV", "festival Instagram", "festival photo", "watermark this", "festival video", "festival carousel", "Rachel's draft", "import", "import the batch", "run the import" (the `.import/` folder workflow), or any social media work for the Hitchin Beer & Cider Festival 2026. Use this even if the user just mentions a sponsor name in the context of the festival.
 ---
 
 # HBCF Social Media Manager
@@ -62,6 +62,58 @@ These are the exact rules configured in Publer's brand voice. Use them whenever 
 - Made-up facts. If a beer name, sponsor description, ABV or detail is unknown, leave a placeholder in square brackets such as `[BEER NAME]` for human review. Never invent.
 
 **CAMRA terminology used correctly:** cask, real ale, perry, mead. Do not call cask ale "craft" unless referring specifically to keg craft beer.
+
+---
+
+## Import command (`.import/` workflow)
+
+The fastest way to turn a teammate's raw drop into ready-to-schedule posts. A teammate puts a base message and the post images into the `.import/` folder at the repo root, then asks to "import". This command runs the whole pipeline end to end: parse the message, brand the images, build the two CSVs, push the images so Publer can fetch them, and hand back short manual Publer steps.
+
+Trigger on: "import", "import the batch", "run the import", or finding content in `.import/`.
+
+`.import/` is gitignored. It is a scratch inbox, not a tracked folder. Its contents are inputs only; the command writes processed outputs into the real asset folders (`community/`, `partners/`, etc.) and `csv/`.
+
+### What the folder holds
+
+- **One base message** — a `.docx`, `.txt`, or `.md` file with the caption text. This is the teammate's voice; treat it as a draft to parse, not to rewrite.
+- **One or more images** — `.heic`, `.jpeg`/`.jpg`, or `.png`. Usually real photos that need cropping and the hedgehog watermark. Branded graphics from the design team are the exception (no watermark).
+
+### Steps
+
+1. **Scan `.import/`.** List every document and image. If there is more than one document, ask which is the base message, then read it.
+   - Extract `.docx` text with `textutil -convert txt -stdout file.docx` (macOS) or `python-docx`.
+2. **Confirm the batch details.** Use `AskUserQuestion` with options for anything not clear from the message:
+   - **Batch name** — the `<series>-<batch>` slug for filenames (e.g. `mp-visit`, `day3`).
+   - **Target image folder** — `community/`, `partners/`, `sponsors/`, etc. Suggest one from the topic; create a new folder if none fit.
+   - **Schedule date and time** — for the `Date` column (`YYYY/MM/DD HH:MM`). Suggest a sensible slot; the user can override.
+   - **Single post or carousel** — if a carousel, confirm the slide order.
+   - **Photos vs branded graphics** — only real photos get the watermark.
+3. **Parse the base message.** Apply the standard fixes from "Parsing drafts from teammates" silently. Preserve the body wording and any urgency. Flag the fixes you made in the final reply.
+4. **Draft the FB and IG captions.** Run the voice rules. Add the canonical hashtag block and the partnership line. No `@` mentions in either caption. IG gets the link-in-bio line; FB gets the plain tickets URL.
+5. **Brand the images.** For each photo: convert HEIC if needed, centre-crop to 1080×1080, apply the hedgehog watermark (see "Photo treatment workflow"). Skip the watermark for branded graphics. Name files descriptively; number carousel slides in order (`<batch>-1-<subject>.png`). Write them into the chosen folder.
+6. **Write alt text** for each image, one per slide, in slide order.
+7. **Build the two CSVs.** One Facebook, one Instagram, all 12 columns. `Media URL(s)` is the comma-separated raw URLs in slide order; `Alt text(s)` is the `||`-separated alt texts in the same order. Save as `csv/hbcf-<batch>-facebook.csv` and `csv/hbcf-<batch>-instagram.csv`.
+8. **Push to `main`.** Stage the new images and the two CSVs only (never `.import/`). Commit with a `feat(<folder>): ...` message and push, so the raw URLs are live before the user opens Publer.
+9. **Verify the raw URLs** return 200 before reporting success.
+10. **Present results and short instructions** (see below).
+11. **Offer to clear `.import/`** so the next run starts clean. Ask before deleting; these are the teammate's originals.
+
+### Output to present
+
+Keep it short. Most users run this often and do not need the full Publer guide re-explained each time.
+
+- One line per artifact created (images, the two CSV paths, the commit hash).
+- Confirmation that the raw URLs resolve.
+- The manual Publer steps, condensed:
+  1. Publer → Create → Bulk Options → Import CSV → select the **Facebook** CSV.
+  2. Load drafts, confirm images attached, select the Facebook page, add `@CAMRA North Hertfordshire` and `@Hitchin Rugby Club` (plus any relevant) via the composer, set the schedule, submit.
+  3. Repeat with the **Instagram** CSV (no `@` mentions; set in-image tags if needed).
+- A closing line offering more: full Publer walkthrough, a different schedule, or caption edits.
+
+### When to ask vs proceed
+
+- **Ask** when: the batch name or target folder is ambiguous, the schedule is unstated, the carousel order is unclear, or it is uncertain whether an image is a photo or a branded graphic.
+- **Proceed without asking** when: there is one document and one or more photos, the topic maps cleanly to a folder, and the message states the date and time. Note the assumptions in the final reply so the user can correct them.
 
 ---
 
@@ -1016,6 +1068,8 @@ When `TBC`, the team should verify the sponsor's actual Facebook Page name and I
 
 ## Workflow
 
+If the work starts from a drop in `.import/`, follow the "Import command (`.import/` workflow)" section instead; it orchestrates the steps below end to end. The numbered flow here is the manual path for work that does not come through `.import/`.
+
 1. **Understand the brief.** Sponsor thank-you, countdown series, single countdown post, beer announcement, volunteer call-out, big-number stat, list feature, partner spotlight, launch moment, event-day photo carousel, or something else?
 2. **If a teammate draft is supplied** (Word doc or pasted text), apply the standard fixes silently (see "Parsing drafts from teammates"). Preserve the original body wording and any urgency.
 3. **Gather facts.** Use the research checklist for sponsor posts. For other categories, gather the specific factual content first.
@@ -1048,7 +1102,12 @@ When `TBC`, the team should verify the sponsor's actual Facebook Page name and I
 
 ## Changelog
 
-### v1.2.0 (post-2026 festival)
+### v1.4.0 (post-2026 festival)
+
+- **Import command (`.import/` workflow)** — one end-to-end command that turns a teammate's raw drop (base message plus images in the gitignored `.import/` folder) into branded images, two platform CSVs, a push to `main`, and short manual Publer steps. Orchestrates the existing draft-parsing, photo-treatment, CSV, and push sub-workflows. Interactive: asks for batch name, target folder, schedule, and carousel order when not obvious; proceeds with stated assumptions otherwise.
+- **`.gitignore` added** — excludes `.import/` (scratch inbox) and `.DS_Store`.
+
+### v1.3.0 (post-2026 festival)
 
 Added based on patterns that emerged during the live 2026 campaign:
 

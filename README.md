@@ -32,8 +32,13 @@ hbcf-social/
 ├── build-up/                         # Setup-week photos (planned)
 ├── on-site/                          # Live festival photos (planned)
 ├── copy/                             # Hand-written post copy (md) for video/manual posts that bypass the CSV pipeline
-└── csv/                              # Publer bulk-import CSVs (one per platform per batch)
+├── csv/                              # Publer bulk-import CSVs (one per platform per batch)
+└── .import/                          # Scratch inbox for the import command (gitignored); base message + raw images dropped in here
 ```
+
+## Import command
+
+Drop a base message (`.docx`, `.txt`, or `.md`) and the post images into `.import/`, then ask Claude (with the skill installed) to "import". The skill parses the message, brands the images (square crop plus hedgehog watermark), writes the two platform CSVs into `csv/`, pushes the images to `main`, and returns short manual Publer steps. `.import/` is gitignored and holds inputs only; processed outputs land in the tracked asset folders. See the skill's "Import command" section for the full flow.
 
 ## Installing the skill
 

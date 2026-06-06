@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Social media skills and assets for the Hitchin Beer & Cider Festival",
-    "version": "1.3.0"
+    "version": "1.4.0"
   },
   "plugins": [
     {
       "name": "hbcf-social-media",
       "source": "./plugins/hbcf-social-media",
-      "description": "Full social media operations toolkit for the Hitchin Beer & Cider Festival: voice rules, post recipes, visual template library, photo treatment workflow, and Publer CSV bulk upload.",
-      "version": "1.3.0",
+      "description": "Full social media operations toolkit for the Hitchin Beer & Cider Festival: voice rules, post recipes, visual template library, photo treatment workflow, the .import end-to-end command, and Publer CSV bulk upload.",
+      "version": "1.4.0",
       "category": "marketing"
     }
   ]

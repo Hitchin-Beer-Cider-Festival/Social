@@ -1,0 +1,7 @@
+# Scratch inbox for the import command: teammate-supplied base messages and
+# raw images. Inputs only; the import command writes processed outputs into the
+# tracked asset folders (community/, partners/, etc.) and csv/.
+.import/
+
+# macOS
+.DS_Store
