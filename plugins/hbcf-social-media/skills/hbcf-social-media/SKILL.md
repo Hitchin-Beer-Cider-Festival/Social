@@ -1,6 +1,6 @@
 ---
 name: hbcf-social-media
-description: Draft Facebook and Instagram posts and Publer CSV bulk uploads for the Hitchin Beer & Cider Festival in the established festival voice. Use this skill whenever asked to write posts for HBCF, thank a sponsor, announce a beer or session, post festival updates, draft countdown posts, or prepare bulk schedules in Publer. Triggers include "HBCF post", "Hitchin Beer Festival social", "thank [sponsor] for the festival", "countdown post", "Publer CSV", "festival Instagram", or any social media work for the Hitchin Beer & Cider Festival 2026. Use this even if the user just mentions a sponsor name in the context of the festival.
+description: Draft Facebook and Instagram posts, generate branded graphics, process event photos, and prepare Publer CSV bulk uploads for the Hitchin Beer & Cider Festival in the established festival voice. Covers the full visual template library (sponsor thanks, countdown cards, big-number stats, list feature carousels, partner spotlights, launch moments, watermarked event photos), the photo treatment workflow (HEIC conversion, square cropping, hedgehog watermarking), parsing of teammate Word-doc drafts, and the image-vs-video posting strategy. Use this skill whenever asked to write posts for HBCF, thank a sponsor, announce a beer or session, post festival updates, draft countdown posts, prepare event-day carousels, watermark or crop a photo for the festival, parse a draft from Rachel or another teammate, or prepare bulk schedules in Publer. Triggers include "HBCF post", "Hitchin Beer Festival social", "thank [sponsor] for the festival", "countdown post", "Publer CSV", "festival Instagram", "festival photo", "watermark this", "festival video", "festival carousel", "Rachel's draft", or any social media work for the Hitchin Beer & Cider Festival 2026. Use this even if the user just mentions a sponsor name in the context of the festival.
 ---
 
 # HBCF Social Media Manager
@@ -62,6 +62,42 @@ These are the exact rules configured in Publer's brand voice. Use them whenever 
 - Made-up facts. If a beer name, sponsor description, ABV or detail is unknown, leave a placeholder in square brackets such as `[BEER NAME]` for human review. Never invent.
 
 **CAMRA terminology used correctly:** cask, real ale, perry, mead. Do not call cask ale "craft" unless referring specifically to keg craft beer.
+
+---
+
+## Parsing drafts from teammates
+
+Rachel and other team members often provide draft captions in Word documents (`.docx`) or pasted text. These drafts are good source material but need standard fixes before they are ready for Publer. Apply the fixes silently and flag them in the response when delivering the CSV.
+
+### Standard fixes (apply silently, flag in the reply)
+
+| In the draft | Replace with | Reason |
+|---|---|---|
+| ` - ` (space-hyphen-space) joiner | `,` (comma) | Reads cleaner; em-dash-adjacent punctuation breaks the voice rules across a campaign |
+| `Hitchin Rugby Club` (alone in footer) | `King George V Playing Fields, Old Hale Way, Hitchin, SG5 1XL` | Canonical venue line, includes postcode for travel |
+| `@HitchinBeerCiderFestival @camranorthherts ...` block | Drop entirely from the caption | Won't resolve via CSV import; FB mentions are added in composer after import |
+| (no partnership line) | Add `In partnership with CAMRA North Hertfordshire and Hitchin Rugby Club.` at the end | Consistent footer across the campaign |
+| `Advance tickets still available` on the last day of the festival | `Tickets at the door, no need to book in advance` | Last day; no advance ticket sales |
+
+### Preserve the original
+
+- **Body wording** — the body of the caption is the teammate's voice. Do not paraphrase or "improve" it. Only apply the fixes in the table above.
+- **Urgency and tone** — if the draft has urgency ("Today is our last day", "Doors close at 10pm"), keep it intact. Rachel's notes sometimes say "do not soften it"; even when they don't, urgency is intentional.
+- **Specific facts** — beer counts, opening times, sponsor names. If anything looks wrong, flag and ask rather than silently changing.
+
+### When to flag and ask
+
+- Ticket framing on the last day (advance vs door) if it's ambiguous
+- Photo selection or order if the draft references images you don't have or in an order that doesn't match what was uploaded
+- Any factual claim that contradicts known festival facts (dates, address, opening times, scale)
+- Anything that affects branding tone (e.g. a draft using emojis or em-dashes — flag rather than rewrite)
+
+### Posting notes from the draft
+
+Drafts often include posting notes at the bottom (e.g. "post before midday", "use alongside your video", "change 11pm to 10pm if posting Saturday"). Treat these as instructions and:
+- Schedule the CSV to the time indicated
+- Surface any conditional instructions in the response so the human knows what to adjust if circumstances change
+- If the notes say "do not soften it", do not soften the urgency
 
 ---
 
@@ -219,6 +255,206 @@ Body should cover: scale (200 drinks), session times, member free entry, advance
 
 ---
 
+## Big number stat post recipe
+
+A single arresting number can carry an entire post. Used during the campaign for:
+- `47` ciders, perries and meads at the Cider Bar
+- `80` world beers at the International Beer Bar
+
+The shape is one number, one descriptor, framed by festival branding.
+
+### Post template
+
+```
+[Kicker:] ON THE CIDER BAR / ON THE INTERNATIONAL BEER BAR
+[Hero number:] 47 / 80 (very large, dominant)
+[Descriptor:] CIDERS, PERRIES & MEADS / WORLD BEERS
+
+[Body, 80-120 words explaining what attendees will find]
+
+[Standard footer block: dates, venue, hashtags, partnership line]
+```
+
+### When to use this template
+
+- A bar or category has a single headline number worth promoting (count, percentage, years)
+- The number is between 10 and 999 (single-digit numbers feel small; four-digit numbers crowd the canvas)
+- You can write 80-150 words of body content explaining what the number represents
+
+### Graphic specification
+
+See "Visual template library" below for the big-number stat graphic spec.
+
+---
+
+## List feature post recipe
+
+A list of items grouped under one theme works as a multi-slide carousel. Used during the campaign for:
+- Dark ales feature: title card + brewery slides (Moor, Kernel, Abbeydale)
+- World beer feature: big-`80` card + Belgium list + Germany list (within the same big-number post)
+
+The shape is a title slide followed by 2-4 detail slides, each focused on one item.
+
+### Post template
+
+```
+Carousel structure:
+- Slide 1: List title card (e.g. "DARK ALES TO TRY")
+- Slides 2-4: One item per slide (brewery logo + beer name, or country + beer list)
+
+Caption:
+[2-3 sentence intro to the theme]
+[Quick list of what's featured in the carousel, plain text]
+[Standard footer: dates, venue, hashtags, partnership line]
+```
+
+### When to use this template
+
+- A bar has a defined sub-theme worth its own post (dark ales, vegan ales, GF/vegan, light sessions, a specific country's beers)
+- 3-4 items make the list (2 is too thin; 5+ overcrowds the carousel and individual slides feel rushed)
+- The items are visually distinguishable (different breweries' pump clips, country names, style classifications)
+
+### Graphic specification
+
+See "Visual template library" below for list feature graphic specs.
+
+---
+
+## Partner spotlight recipe
+
+A partner or chosen charity beneficiary post recognises an organisation that is supported by, or supports, the festival. Used during the campaign for:
+- Feed Up Warm Up (chosen charity beneficiary, returning for the third year)
+
+### Post template
+
+```
+[Kicker:] PROUDLY SUPPORTING
+[Centre:] Partner logo (preserved in native colours where possible)
+[Festival branding at the bottom]
+
+Caption:
+The Hitchin Beer & Cider Festival is delighted to welcome [PARTNER] 
+[back for their Nth year with us / to the festival for the first time].
+
+[2-3 sentences on what the partner does, in factual terms]
+
+[Practical call to action: where to find them on site, what they're doing]
+
+[Standard footer + hashtags including #Charity if applicable]
+```
+
+### When to use this template
+
+- A charity, community organisation, or non-sponsor partner is associated with the festival
+- The partner has a recognisable logo or visual identity
+- The relationship is supportive rather than transactional (a sponsor uses the sponsor template instead)
+
+### When NOT to use this template
+
+- Sponsor relationships — use the sponsor thank-you recipe instead
+- Suppliers, vendors, contractors — these don't typically get a spotlight unless there's a community angle
+
+### A specific note on Feed Up Warm Up
+
+Feed Up Warm Up is the festival's chosen charity beneficiary, not a partner in the technical sense. Token cards left without refunds, plus any additional money donated by visitors, go directly to the charity. They do not receive funds from the overall festival budget. **This funding mechanism is intentionally not mentioned on social media** — public-facing posts use "supporting" language, not financial detail.
+
+### Graphic specification
+
+See "Visual template library" below for partner spotlight graphic spec.
+
+---
+
+## Launch moment recipe
+
+A celebratory milestone post when doors open. Used during the campaign for:
+- "WE ARE OPEN / COME ON IN" at 5pm Thursday
+
+### Post template
+
+```
+[Top:] WE ARE OPEN
+[Centre:] Pink hedgehog (large, hero)
+[Below:] COME ON IN
+[Bottom:] HITCHIN BEER & CIDER FESTIVAL 2026
+
+Caption:
+We are open. Come on in.
+
+Walk-up tickets are available at the door, no need to book in advance. 
+Everyone is welcome.
+
+If you are not drinking, you do not pay to come in. Free entry for 
+under-18s, non-drinkers and designated drivers, so bring the family along. 
+The marquee is dry, comfortable and stocked with around 200 real ales, 
+ciders, perries and meads.
+
+Open until [11pm Thursday and Friday / 10pm Saturday] tonight. See you in there.
+
+[Standard footer + hashtags including #FamilyFriendly]
+```
+
+### When to use this template
+
+- A milestone moment that deserves its own post (doors open, daily opening, last day morning)
+- Not for general updates — a launch moment is a single-purpose celebratory beat
+
+### Critical messaging points
+
+- **Tickets at the door** — every launch moment should mention door tickets, not push advance sales
+- **Family welcome, free non-drinker entry** — distinguishes HBCF from drinks-only events; high-value information for waverers
+- **Closing time only, not opening time** — if posted at the moment doors open, "we are open until 11pm" reads as a present statement; including "doors open at 5pm" reads as future tense and confuses
+
+### Graphic specification
+
+See "Visual template library" below for launch moment graphic spec.
+
+---
+
+## Event-day photo recipe
+
+Posts featuring real festival photos taken on the day (or yesterday). Used during the campaign for:
+- Volunteer briefing thank-you (Thursday)
+- Weather reassurance (Friday, with archival photo)
+- Day 2 opening carousel (Friday — glass, customers, queue, bar)
+- Day 3 last day carousel (Saturday — welcome desk, attendees, bar, outdoor crowd)
+
+### Post template
+
+```
+Carousel:
+- 1 to 4 square-cropped photos with hedgehog watermark lower-right
+- Slide order tells a story (e.g. welcome → enjoying → action → scale)
+
+Caption:
+[Opening line tied to the day or event]
+
+[2-3 sentences of context. If using archival photo, do not claim it's current]
+
+[Practical call to action: what's still available, opening hours, ticket info]
+
+[Standard footer]
+```
+
+### When to use this template
+
+- Festival is live or about to open
+- You have real photos taken on-site (or archival photos for illustrative purposes)
+- The photo itself carries the message; minimal templating
+
+### Photo handling
+
+All photos in this recipe get the standard treatment: HEIC conversion if needed, centre crop to 1080x1080, hedgehog watermark in white box lower-right. See "Photo treatment workflow" below.
+
+### Slide ordering for carousels
+
+A 3-4 slide carousel reads better when slides build a narrative arc rather than appearing in random order. Established patterns:
+- Welcome (people/volunteers) → Experience (attendees enjoying) → Action (bar, serving) → Scale (crowd or outdoor shot)
+- Product (the glass) → People (attendees) → Demand (queue or busy bar) → Operation (the team running it)
+
+Lead with the most visually distinctive frame; that determines the carousel thumbnail.
+
+---
+
 ## Hashtag library
 
 ### Canonical block (every sponsor post)
@@ -346,32 +582,59 @@ Roughly six to eight weeks before the festival, post on this rhythm. Adjust for 
 
 ---
 
-## Image conventions
+## Visual template library
 
-### Sponsor thank-you graphics
+The festival's visual identity rests on three things: festival pink `#EC008C`, Bebas Regular typography, and the pink hedgehog mark. Every branded graphic uses these. Photos use the hedgehog as a watermark only (see "Photo treatment workflow" below).
 
-The festival uses a consistent sponsor thank-you template:
-- Square format (1024x1024 or larger), suitable for both FB and IG
+### Brand identity (canonical)
+
+| Element | Value |
+|---|---|
+| Canvas | 1080 × 1080 PNG (square) for feed posts |
+| Background | White (`#FFFFFF`) for branded graphics; photo content for photo posts |
+| Brand colour | Pink `#EC008C` (process magenta) |
+| Typography | Bebas Regular, all-caps, by Ryoichi Tsunekawa (free for commercial use) |
+| Logo | Pink hedgehog (`pink-hedgehog_png.webp`), white pixels treated as transparent before compositing |
+
+Files are saved as PNG with `optimize=True`. Publer accepts JPG, PNG, GIF, MP4. Do not upload Affinity Photo (`.afphoto`), PSD, or other proprietary formats; export to PNG first.
+
+### Template: Sponsor thank-you graphic
+
+The festival uses a consistent sponsor thank-you template, produced by the design team (not this skill):
+- Square format (1024×1024 or larger), suitable for both FB and IG
 - White background
 - `THANK YOU TO OUR SPONSOR` in dark red across the top
 - Sponsor logo centred
 - `HITCHIN BEER & CIDER FESTIVAL` in dark red across the bottom
 
-These graphics are produced by the festival design team. The skill does not generate them.
+### Template: Brewery / cask spotlight
 
-### Countdown graphics
-
-Used for the daily countdown posts (days 10 down to 1) and the launch day post. Generated programmatically by this skill or by the festival design team.
+Used for individual brewery features and brewery carousels (e.g. cask brewery curation, craft brewery curation). One slide per brewery.
 
 **Specification:**
-- Square format, 1080x1080 PNG
-- White background
-- Top text band: countdown line in Bebas Regular, approximately 130pt, in festival pink `#EC008C`
+- 1080×1080 white canvas
+- Top kicker text in pink Bebas: `NEW TO THE FESTIVAL`, `BREWERY SPOTLIGHT`, `CASK BAR PICK`, `CRAFT BAR PICK`, or similar at ~90pt
+- Brewery logo centred at approximately 800×400 (scale to fit aspect ratio, keep native colours)
+- Bottom-left: `HITCHIN BEER & CIDER` over `FESTIVAL 2026` in pink Bebas ~56pt
+- Bottom-right: small pink hedgehog ~130×130
+
+**Logo treatment:**
+- If the logo has its own dark/black background, keep it as a dark tile rather than trying to extract — looks like a deliberate design choice (Bishop Nick, Pretty Decent)
+- If the logo is on white or transparent, place directly
+- Never invert or recolour the logo to match the festival's pink
+
+### Template: Countdown card
+
+Used for the daily countdown posts (days 10 down to 1) and the launch day post. Generated programmatically by this skill.
+
+**Specification:**
+- 1080×1080 white canvas
+- Top text band: countdown line in pink Bebas ~130pt
   - Days 10 to 2: `X DAYS LEFT`
   - Day 1: `1 DAY LEFT` (singular)
   - Launch day: `OPENS TODAY` (or equivalent short phrase)
-- Centre: the pink hedgehog logo at 520x520 px, transparent background composited over the white canvas
-- Bottom text band: two lines, both in Bebas Regular, approximately 78pt, also in `#EC008C`
+- Centre: pink hedgehog ~520×520, transparent background composited over white
+- Bottom text band: two lines in pink Bebas ~78pt
   - Line 1: `HITCHIN BEER & CIDER`
   - Line 2: `FESTIVAL 2026`
 
@@ -379,22 +642,218 @@ Used for the daily countdown posts (days 10 down to 1) and the launch day post. 
 - `countdown-10.png` through `countdown-1.png` for daily countdown
 - `countdown-launch.png` for the Thursday morning launch graphic
 
-**Assets used:**
-- Logo: festival pink hedgehog (same as the website favicon and primary brand mark)
-- Font: Bebas Regular by Ryoichi Tsunekawa (free for commercial use)
-- Pink: `#EC008C` (process magenta, extracted from the hedgehog logo)
+### Template: Big number stat post
 
-### Improvements being considered for future sponsor graphics
+A single dominant number framed by festival branding.
 
-These are not yet implemented for sponsor thank-you templates. Use the current sponsor template until updated:
-- Festival hedgehog logo top-left for brand recognition (now in place on countdown graphics)
-- Footer strip with dates, venue, and URL
-- Tier badge differentiating t-shirt, programme, bar, and cask sponsors
-- T-shirt mockup specifically for t-shirt-tier sponsors
+**Specification:**
+- 1080×1080 white canvas
+- Top kicker in pink Bebas ~70-80pt: context line (e.g. `ON THE CIDER BAR`)
+- Centre: the number itself in pink Bebas at very large size (~480-500pt for two-digit numbers like `47`, `80`)
+- Below centre: descriptor in pink Bebas ~70pt (e.g. `CIDERS, PERRIES & MEADS`)
+- Bottom-left: `HITCHIN BEER & CIDER` over `FESTIVAL 2026` ~56pt
+- Bottom-right: small pink hedgehog ~130×130
 
-### File format
+**Used in campaign:** Cider Bar `47`, World Beer Bar `80`.
 
-Publer accepts JPG, PNG, GIF, MP4. Do not upload Affinity Photo (`.afphoto`), PSD, or other proprietary formats; export to PNG first.
+### Template: List feature carousel
+
+Multi-slide carousel for grouped content.
+
+**Slide 1 (title card) specification:**
+- 1080×1080 white canvas
+- Top kicker in pink Bebas ~85pt: theme name (e.g. `DARK ALES TO TRY`)
+- Centre: 3-5 list items in pink Bebas ~70-90pt, each line a brewery name + beer name
+- Bottom-left: `HITCHIN BEER & CIDER` over `FESTIVAL 2026` ~56pt
+- Bottom-right: small pink hedgehog ~130×130
+
+**Subsequent slides (one per item):**
+- Use the brewery / cask spotlight template (above)
+- Or a country-list card for international beer carousels (kicker + country name + beer list + branding)
+
+**Used in campaign:** Dark Ales (4 slides), World Beer Bar (3 slides: big-`80` + Belgium list + Germany list).
+
+### Template: Partner spotlight
+
+For charity beneficiaries and community partners.
+
+**Specification:**
+- 1080×1080 white canvas
+- Top kicker in pink Bebas ~110pt: `PROUDLY SUPPORTING`
+- Centre: partner logo in native colours, scaled to ~800×400 box
+- Bottom-left: `HITCHIN BEER & CIDER` over `FESTIVAL 2026` ~56pt
+- Bottom-right: small pink hedgehog ~130×130
+
+**Logo treatment:**
+- Use the partner's native colours, even if they clash with festival pink. The partner's brand identity matters more than visual harmony with the festival
+- If the partner logo is supplied on a black background, replace the dark pixels with white before placing (use threshold-based flatten, not transparency, to avoid haloing)
+
+**Used in campaign:** Feed Up Warm Up (orange + blue logo on white festival canvas).
+
+### Template: Launch moment card
+
+A milestone-marker graphic for the moment doors open.
+
+**Specification:**
+- 1080×1080 white canvas
+- Top in pink Bebas ~160pt: `WE ARE OPEN` (dominant message)
+- Centre: pink hedgehog ~460×460
+- Below hedgehog in pink Bebas ~100pt: `COME ON IN`
+- Bottom centred in pink Bebas ~52pt: `HITCHIN BEER & CIDER FESTIVAL 2026`
+
+**Used in campaign:** Thursday 5pm "we are open" launch moment.
+
+### Template: Photo with hedgehog watermark
+
+Real event-day photos cropped to square with the hedgehog watermark applied lower-right. See "Photo treatment workflow" below for the full procedure.
+
+**Visual specification:**
+- 1080×1080 (square crop of the original photo)
+- Hedgehog watermark in white rounded box, lower-right, 30px margin
+- White box: 180×180, slight rounded corners (radius 12), 235 alpha (slightly translucent)
+- Hedgehog: 130×130, pink, centred inside the white box
+
+**Used in campaign:** volunteer briefing thank-you, weather reassurance, Day 2 carousel (4 slides), Day 3 carousel (4 slides).
+
+---
+
+## Photo treatment workflow
+
+When teammates share photos for an event-day post, the photo needs square cropping plus the hedgehog watermark. Photos arrive as iPhone HEIC, WhatsApp JPEG, or DSLR JPEG.
+
+### Step 1: Convert HEIC if needed
+
+iPhone photos arrive as `.HEIC` which PIL doesn't read natively. Install and register the HEIC opener once per session:
+
+```python
+import pillow_heif
+pillow_heif.register_heif_opener()
+# After this, PIL.Image.open() handles .HEIC files transparently
+```
+
+Install with `pip install pillow-heif --break-system-packages` if not present.
+
+### Step 2: Centre crop to square
+
+Default to a centre crop. Most festival photos have the main subject central, and centre crop is predictable. The original aspect ratio is usually 4:3 (1.33) landscape or 3:4 portrait; for either, crop to a square by removing equal amounts from the longer dimension.
+
+```python
+w, h = photo.size
+crop_size = min(w, h)
+left = (w - crop_size) // 2
+top = (h - crop_size) // 2
+photo_sq = photo.crop((left, top, left + crop_size, top + crop_size))
+photo_sq = photo_sq.resize((1080, 1080), Image.LANCZOS)
+```
+
+**When centre crop is wrong:**
+- Subject is significantly off-centre (rare for posed event photos)
+- Bar signage or branding is at one edge and you want to preserve it
+- Faces or named individuals would be cut off
+
+For those cases, compute a weighted crop manually. Do not write a "smart crop" routine; the photos are too varied for it to be reliable.
+
+### Step 3: Apply the hedgehog watermark
+
+White rounded box in the lower-right corner, with the pink hedgehog centred inside it.
+
+```python
+from PIL import Image, ImageDraw
+
+def load_hedgehog(target_size):
+    """Load the pink hedgehog and make white pixels transparent."""
+    h = Image.open(HEDGEHOG_PATH).convert("RGBA")
+    data = [(255, 255, 255, 0) if (r > 240 and g > 240 and b > 240) else (r, g, b, a)
+            for (r, g, b, a) in h.getdata()]
+    h.putdata(data)
+    return h.resize((target_size, target_size), Image.LANCZOS)
+
+def apply_watermark(photo_sq):
+    """Composite the hedgehog watermark in lower-right white box."""
+    margin = 30
+    box_size = 180
+    hedge_size = 130
+
+    photo_sq = photo_sq.convert("RGBA")
+    overlay = Image.new("RGBA", photo_sq.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    box_x = photo_sq.width - box_size - margin
+    box_y = photo_sq.height - box_size - margin
+    draw.rounded_rectangle(
+        [(box_x, box_y), (box_x + box_size, box_y + box_size)],
+        radius=12, fill=(255, 255, 255, 235)
+    )
+    photo_sq = Image.alpha_composite(photo_sq, overlay)
+    hedgehog = load_hedgehog(hedge_size)
+    photo_sq.paste(hedgehog,
+                   (box_x + (box_size - hedge_size) // 2,
+                    box_y + (box_size - hedge_size) // 2),
+                   hedgehog)
+    return photo_sq.convert("RGB")
+```
+
+### When to apply the watermark (and when not to)
+
+**Apply watermark:** real photographs (HEIC, JPEG from event days, archival photos used in current posts).
+
+**Do not apply watermark:** branded graphics that already include festival branding (sponsor cards, countdown cards, stat cards, partner cards, launch cards). These have the hedgehog and festival name built into the layout already; adding a watermark double-brands them and looks amateur.
+
+### File naming for photos
+
+Use descriptive snake-case names tied to the post or moment:
+- `volunteer-briefing.png`
+- `weather-marquee.png`
+- `day2-1-glass.png`, `day2-2-customers.png`, `day2-3-queue.png`, `day2-4-bar.png`
+- `day3-1-welcome.png`, `day3-2-goers.png`, `day3-3-bar.png`, `day3-4-crowd.png`
+
+For carousels, number the slides in the filename so the order is unambiguous when uploaded.
+
+---
+
+## Mixed media: images and videos
+
+Different content types need different treatment. The temptation to mix image and video in one carousel is real; the reliability of doing it via Publer CSV is low. The pattern below favours reliability over feature-completeness.
+
+### Image-only carousels via CSV: reliable
+
+CSV bulk import handles multiple images cleanly:
+- Comma-separated URLs in the `Media URL(s)` column
+- Matching alt texts in `Alt text(s)` separated by `||`
+- Works for both Facebook and Instagram
+- Carousel slide order matches URL order in the CSV
+
+This is the default for event-day photo posts.
+
+### Video posts: post separately, native upload
+
+Videos work best as **standalone posts**, not as slides in a carousel:
+
+- **On Instagram:** post as a Reel. Reels get significantly more reach than feed slides or video posts in a carousel
+- **On Facebook:** post as a native video post (not a link share)
+- **Upload natively** via the FB/IG mobile apps or via Publer's UI; not via CSV
+- Posting natively lets the platforms transcode and handle the format conversion automatically
+
+### Codec considerations
+
+iPhone videos default to HEVC (H.265). Facebook and Instagram **prefer H.264** and may transcode HEVC poorly or refuse to upload it. If a video fails to upload:
+- Check the codec with `ffprobe`
+- If HEVC, convert to H.264 with HandBrake (Mac, free) or ffmpeg one-liner
+- MP4 container is more universal than MOV
+
+### Mixed image + video carousels
+
+Both Instagram and Facebook support mixed-media carousels (since 2022 for IG). But **doing this via Publer CSV is unreliable** for two reasons:
+- GitHub raw URLs work for images but are not designed for video streaming. Video files load slowly and may time out during Publer's CSV import
+- Aspect ratios usually don't match between square photos and landscape video
+
+**Workaround if you really need a mixed-media carousel:**
+1. Upload via Publer's UI (not CSV), attaching the video file directly
+2. Or pre-convert the video to a square 1080×1080 export with H.264 codec
+3. Or — usually best — split into separate posts: one image carousel, one standalone video Reel/post
+
+### Default recommendation
+
+For event-day content, treat images and videos as separate posts. Image carousels via CSV, videos as native Reels/posts. The video gets better engagement on its own anyway.
 
 ---
 
@@ -451,11 +910,16 @@ Images for posts are hosted in the `lekman/hbcf-social` repository on GitHub. Th
 https://raw.githubusercontent.com/lekman/hbcf-social/main/<folder>/<filename>
 ```
 
-Folder convention:
+Folder convention (as established during the 2026 campaign):
 - `countdown/` for countdown graphics (`countdown-1.png` through `countdown-launch.png`)
-- `sponsors/` for sponsor thank-you graphics
-- `build-up/` for setup-week photos
-- `on-site/` for live photos from the festival
+- `brewery-spotlights/` for individual brewery feature graphics (one PNG per brewery)
+- `cider/` for Cider Bar feature posts (`cider-bar-47.png` etc.)
+- `beers/` for beer style or category feature posts (dark ales, world beer slides, etc.)
+- `partners/` for charity beneficiary and community partner posts (Feed Up Warm Up etc.)
+- `community/` for event-day photos with watermarks (volunteers, weather, day 2/3 carousels, launch moment)
+- `sponsors/` for sponsor thank-you graphics from the design team
+
+When in doubt, choose a folder by topic; create a new folder if the existing ones don't fit. Topic-based folder organisation keeps the repo browsable as the asset library grows year on year.
 
 To add new images:
 1. Push the file to the appropriate folder on `main`
@@ -552,18 +1016,22 @@ When `TBC`, the team should verify the sponsor's actual Facebook Page name and I
 
 ## Workflow
 
-1. **Understand the brief.** Sponsor thank-you, countdown series, single countdown post, beer announcement, volunteer call-out, or something else?
-2. **Gather facts.** Use the research checklist for sponsor posts. For other categories, gather the specific factual content first.
-3. **Draft the post body.** Follow the appropriate template (sponsor recipe, countdown recipe, or general structure). Run the voice rules in your head as you write.
-4. **Produce platform variants.** Facebook and Instagram each need their own version.
-5. **Add hashtags and tags.** Pull from the libraries above.
-6. **For countdown series, vary the joiners.** Don't let every opener use the same construction.
-7. **Run both quality checklists.**
-8. **Output:**
-   - For a single post: present as two text blocks (FB and IG) for the user to copy into Publer
-   - For a batch: produce **two CSV files, one per platform**, named `hbcf-<series>-<batch>-facebook.csv` and `hbcf-<series>-<batch>-instagram.csv`, each containing all 12 Publer columns
-   - For a countdown series: produce both CSVs and the PNG graphics (using the countdown graphic specification)
-9. **Note any TBC handles or facts** the user needs to verify before scheduling.
+1. **Understand the brief.** Sponsor thank-you, countdown series, single countdown post, beer announcement, volunteer call-out, big-number stat, list feature, partner spotlight, launch moment, event-day photo carousel, or something else?
+2. **If a teammate draft is supplied** (Word doc or pasted text), apply the standard fixes silently (see "Parsing drafts from teammates"). Preserve the original body wording and any urgency.
+3. **Gather facts.** Use the research checklist for sponsor posts. For other categories, gather the specific factual content first.
+4. **Process photos if needed.** Convert HEIC, centre crop to 1080×1080, apply hedgehog watermark for real photos (not branded graphics). See "Photo treatment workflow".
+5. **Decide image vs video strategy.** Image-only carousels go via CSV. Videos go as separate native posts (Reels/native video). Do not mix in a CSV carousel.
+6. **Draft the post body.** Follow the appropriate recipe (sponsor, countdown, big number stat, list feature, partner spotlight, launch moment, event-day photo). Run the voice rules in your head as you write.
+7. **Produce platform variants.** Facebook and Instagram each need their own version.
+8. **Add hashtags and tags.** Pull from the libraries above.
+9. **For countdown series, vary the joiners.** Don't let every opener use the same construction.
+10. **Run both quality checklists.**
+11. **Output:**
+    - For a single post: present as two text blocks (FB and IG) for the user to copy into Publer
+    - For a batch: produce **two CSV files, one per platform**, named `hbcf-<series>-<batch>-facebook.csv` and `hbcf-<series>-<batch>-instagram.csv`, each containing all 12 Publer columns
+    - For a countdown series: produce both CSVs and the PNG graphics
+    - For an event-day photo carousel: produce both CSVs plus a zipped folder bundle with the processed photos under the right `community/` (or other) folder for direct unzip into the repo
+12. **Note any TBC handles or facts** the user needs to verify before scheduling.
 
 ---
 
@@ -573,3 +1041,30 @@ When `TBC`, the team should verify the sponsor's actual Facebook Page name and I
 - Hold Publer login credentials; those are in the shared password manager
 - Schedule posts directly; Publer's UI is used for the final step
 - Replace human review; every generated post is reviewed by a human before publishing
+- Transcode video; if a video needs codec conversion (HEVC → H.264), use HandBrake or ffmpeg externally
+- Generate animated content (Stories, Reels with motion graphics)
+
+---
+
+## Changelog
+
+### v1.2.0 (post-2026 festival)
+
+Added based on patterns that emerged during the live 2026 campaign:
+
+- **Parsing drafts from teammates** — the four standard fixes for Rachel's Word-doc drafts ( - joiner → comma, venue line, drop @-block, add partnership line), preservation of body wording and urgency, posting-notes handling.
+- **Five new post recipes:**
+  - Big number stat post (used for cider 47, world beer 80)
+  - List feature carousel (used for dark ales, world beer carousels)
+  - Partner spotlight (used for Feed Up Warm Up)
+  - Launch moment card (used for the "we are open" 5pm Thursday moment)
+  - Event-day photo carousel (used for volunteer briefing, weather, day 2 and day 3)
+- **Visual template library** — replaces and expands the previous "Image conventions" section. Documents all seven templates (sponsor, countdown, big number stat, list feature, partner spotlight, launch moment, photo with watermark) with concrete sizing.
+- **Photo treatment workflow** — HEIC conversion, centre crop to square, hedgehog watermark in white box lower-right. Includes PIL code references for the watermark and crop routines. Rule about when to apply the watermark (real photos yes, branded graphics no).
+- **Mixed media: images and videos** — image-only carousels via CSV (reliable), videos as separate native Reels/posts (better engagement, avoids HEVC codec and GitHub-raw streaming issues), guidance on mixed carousels.
+- **Folder convention updated** — `partners/`, `community/`, `cider/`, `beers/`, `brewery-spotlights/` added; topic-based naming for year-on-year repo growth.
+- **Workflow steps expanded** — explicit photo processing step, draft parsing step, image/video strategy decision, event-day carousel bundle output.
+
+### v1.1.0 (pre-2026 festival)
+
+Initial published version. Core sponsor and countdown recipes, hashtag and account tag libraries, Publer CSV bulk upload workflow with the confirmed CSV mention-resolution constraint.
