@@ -33,12 +33,9 @@ hbcf-social/
 ├── on-site/                          # Live festival photos (planned)
 ├── copy/                             # Hand-written post copy (md) for video/manual posts that bypass the CSV pipeline
 ├── csv/                              # Publer bulk-import CSVs (one per platform per batch)
+├── charity/                          # Charity beneficiary post PNGs (e.g. MP visit, Feed Up Warm Up)
 └── .import/                          # Scratch inbox for the import command (gitignored); base message + raw images dropped in here
 ```
-
-## Import command
-
-Drop a base message (`.docx`, `.txt`, or `.md`) and the post images into `.import/`, then ask Claude (with the skill installed) to "import". The skill parses the message, brands the images (square crop plus hedgehog watermark), writes the two platform CSVs into `csv/`, pushes the images to `main`, and returns short manual Publer steps. `.import/` is gitignored and holds inputs only; processed outputs land in the tracked asset folders. See the skill's "Import command" section for the full flow.
 
 ## Installing the skill
 
@@ -56,6 +53,40 @@ Claude Code fetches `marketplace.json` from this repository, discovers the `hbcf
 ### Claude.ai web or desktop users
 
 Download `dist/hbcf-social-media.skill` from this repository, then upload it via Claude's settings under Skills. The skill will trigger automatically when you ask Claude to draft festival content, thank a sponsor, or prepare a Publer CSV.
+
+## Using the skill
+
+Once installed, the skill handles all festival social work. There are two ways to drive it.
+
+### Conversational (everyday)
+
+Ask Claude in plain language. The skill applies the festival voice, the hashtag and tag libraries, and the Publer CSV rules. What you can ask for:
+
+| Request | Example |
+|---|---|
+| Sponsor thank-you | "thank Modern Networks for sponsoring the festival" |
+| Countdown post or series | a single day, or the full countdown with the countdown card graphics |
+| Beer, cider, or bar feature | "announce the ciders on the Cider Bar", dark ales, world beer |
+| Big-number stat post | a single dominant number on a branded card (e.g. 80 world beers) |
+| List feature carousel | grouped picks across multiple slides |
+| Partner or charity spotlight | a community partner or beneficiary (e.g. Feed Up Warm Up) |
+| Launch moment | "we are open" style posts |
+| Event-day photo carousel | crop and watermark photos, write captions and CSVs |
+| Photo treatment | "watermark and crop this photo for the festival" |
+| Parse a teammate draft | paste or point at a Word-doc draft; the skill applies the standard fixes |
+| Publer CSV batch | produce the two platform CSVs (Facebook and Instagram) ready to upload |
+
+Every post is drafted for human review before scheduling. Publer is always the final, manual step.
+
+### Import flow (batch from a teammate drop)
+
+For a ready-made batch, use the `.import/` folder instead of describing each post:
+
+1. Drop a base message (`.docx`, `.txt`, or `.md`) and the post images into `.import/`.
+2. Ask Claude to "import".
+3. The skill parses the message, brands the images (square crop plus hedgehog watermark), writes the two platform CSVs into `csv/`, pushes the images to `main` so Publer can fetch them, and returns short manual Publer steps. It asks for the batch name, target folder, schedule, and carousel order when these are not obvious.
+
+`.import/` is gitignored and holds inputs only; processed outputs land in the tracked asset folders (`community/`, `charity/`, etc.) and `csv/`. See the skill's "Import command" section for the full flow.
 
 ## Image hosting convention
 
@@ -101,7 +132,7 @@ For the CSV column schema and import workflow, see Publer's guide: [Ultimate CSV
 
 ## Festival operations
 
-Operational guidance for the team (voice rules, post templates, hashtag library, Publer workflow, quality checks) lives inside the skill itself. Install the skill and ask Claude for a sponsor thank-you, a countdown post, or a CSV batch.
+Operational guidance for the team (voice rules, post templates, hashtag library, Publer workflow, quality checks) lives inside the skill itself. See "Using the skill" above for how to drive it.
 
 Publer credentials are stored separately in the team's shared password manager, not in this repository.
 
