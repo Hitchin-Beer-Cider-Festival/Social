@@ -956,10 +956,10 @@ For example: `hbcf-countdown-day-9-to-launch-facebook.csv` and the matching `-in
 
 ### Image hosting via GitHub
 
-Images for posts are hosted in the `lekman/hbcf-social` repository on GitHub. The raw URL pattern is:
+Images for posts are hosted in the `Hitchin-Beer-Cider-Festival/Social` repository on GitHub. The raw URL pattern is:
 
 ```
-https://raw.githubusercontent.com/lekman/hbcf-social/main/<folder>/<filename>
+https://raw.githubusercontent.com/Hitchin-Beer-Cider-Festival/Social/main/<folder>/<filename>
 ```
 
 Folder convention (as established during the 2026 campaign):
@@ -1035,7 +1035,7 @@ Run both checklists before scheduling a batch.
 - [ ] Link(s) column blank for image-led posts (otherwise FB converts to link-share format)
 - [ ] CTA column blank for image-led posts (requires Link, conflicts with native image)
 - [ ] Media URL(s) populated with the GitHub raw URL pointing at the correct folder and filename
-- [ ] Image files actually pushed to `main` of `lekman/hbcf-social` before CSV upload
+- [ ] Image files actually pushed to `main` of `Hitchin-Beer-Cider-Festival/Social` before CSV upload
 - [ ] Raw image URL verified by opening it in a browser
 - [ ] CSV exported from Google Sheets, not Excel
 - [ ] Text field opens with double-quote in Publer preview (newlines preserved)

@@ -44,7 +44,7 @@ hbcf-social/
 Add the marketplace and install:
 
 ```
-/plugin marketplace add lekman/hbcf-social
+/plugin marketplace add Hitchin-Beer-Cider-Festival/Social
 /plugin install hbcf-social-media@hbcf-social
 ```
 
@@ -93,7 +93,7 @@ For a ready-made batch, use the `.import/` folder instead of describing each pos
 Images referenced from Publer CSVs use the GitHub raw URL pattern:
 
 ```text
-https://raw.githubusercontent.com/lekman/hbcf-social/main/<folder>/<filename>
+https://raw.githubusercontent.com/Hitchin-Beer-Cider-Festival/Social/main/<folder>/<filename>
 ```
 
 Folder convention by content type:
