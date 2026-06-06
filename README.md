@@ -88,6 +88,30 @@ For a ready-made batch, use the `.import/` folder instead of describing each pos
 
 `.import/` is gitignored and holds inputs only; processed outputs land in the tracked asset folders (`community/`, `charity/`, etc.) and `csv/`. See the skill's "Import command" section for the full flow.
 
+### Via @claude on GitHub (no install needed)
+
+This repository has the Claude GitHub app installed, so contributors can request festival content without installing anything locally. Claude follows this repository's `CLAUDE.md`, which points it at the `hbcf-social-media` skill, so the GitHub replies use the same festival voice and Publer rules as the local skill.
+
+How to use it:
+
+1. Open a new issue, or comment on an existing issue or pull request.
+2. Describe what you need in plain language.
+3. Mention `@claude` in the body.
+
+Claude reads the request, drafts the content, and replies. When the request produces files (branded images, CSVs), Claude opens a pull request for a team member to review and merge.
+
+Examples:
+
+- `@claude draft a sponsor thank-you for Modern Networks`
+- `@claude prepare a countdown post for 3 days to go`
+- `@claude write Facebook and Instagram captions announcing the Cider Bar ciders`
+
+What still needs a person:
+
+- **Publer is always manual.** Claude prepares the captions, branded images, and the two platform CSVs, and pushes the images so the raw URLs are live. A team member does the final upload and scheduling in Publer.
+- **Import-flow files.** The `.import/` folder is gitignored, so files cannot be dropped there over GitHub. For the import flow via GitHub, attach the base message and images to the issue (or push them to a branch) and ask `@claude` to process them.
+- **Review before merge.** Every Claude pull request is reviewed by a person before it reaches `main`.
+
 ## Image hosting convention
 
 Images referenced from Publer CSVs use the GitHub raw URL pattern:
